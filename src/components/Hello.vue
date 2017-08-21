@@ -1,31 +1,141 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-  </div>
+  <v-container>
+    <v-layout row-sm column child-flex-sm>
+
+      <v-flex xs12 sm6 class="ma-1">
+        <v-card tile>
+          <v-card-text>
+            <form @submit.prevent="onSignin">
+              <v-layout row>
+                <v-flex xs12>
+                  <v-text-field
+                    name="email"
+                    label="Email"
+                    id="email"
+                    v-model="signinUser.email"
+                    type="email"
+                    required></v-text-field>
+                </v-flex>
+              </v-layout>
+
+              <v-layout row>
+                <v-flex xs12>
+                  <v-text-field
+                    name="password"
+                    label="Password"
+                    id="password"
+                    v-model="signinUser.password"
+                    type="password"
+                    required></v-text-field>
+                </v-flex>
+              </v-layout>
+
+              <v-layout row>
+                <v-flex xs12>
+                  <v-btn type="submit" :disabled="loading" :loading="loading">
+                    Sign in
+                    <span slot="loader" class="custom-loader">
+                      <v-icon light>cached</v-icon>
+                    </span>
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </form>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+
+      <v-flex xs12 sm6 class="ma-1">
+        <v-card tile>
+          <v-card-text>
+            <form @submit.prevent="onSignup">
+              <v-layout row>
+                <v-flex xs12>
+                  <v-text-field
+                    name="email"
+                    label="Email"
+                    id="email"
+                    v-model="signupUser.email"
+                    type="email"
+                    required></v-text-field>
+                </v-flex>
+              </v-layout>
+
+              <v-layout row>
+                <v-flex xs12>
+                  <v-text-field
+                    name="password"
+                    label="Password"
+                    id="password"
+                    v-model="signupUser.password"
+                    type="password"
+                    required></v-text-field>
+                </v-flex>
+              </v-layout>
+
+              <v-layout row>
+                <v-flex xs12>
+                  <v-text-field
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    id="confirmPassword"
+                    v-model="signupUser.confirmPassword"
+                    type="password"
+                    required></v-text-field>
+                </v-flex>
+              </v-layout>
+
+              <v-layout row>
+                <v-flex xs12>
+                  <v-btn type="submit" :disabled="loading" :loading="loading">
+                    Sign up
+                    <span slot="loader" class="custom-loader">
+                      <v-icon light>cached</v-icon>
+                    </span>
+                  </v-btn>
+                </v-flex>
+              </v-layout>
+            </form>
+          </v-card-text>
+        </v-card>
+      </v-flex>
+
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 export default {
-  name: 'hello',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      signupUser: {
+        email: '',
+        password: '',
+        confirmPassword: ''
+      },
+      signinUser: {
+        email: '',
+        password: ''
+      }
+    }
+  },
+  computed: {
+    loading () {
+      return this.$store.getters.loading
+    }
+  },
+  methods: {
+    onSignup () {
+      this.$store.dispatch('signUserUp', {
+        user: this.signupUser,
+        router: this.$router
+      })
+    },
+    onSignin () {
+      this.$store.dispatch('signUserIn', {
+        user: this.signinUser,
+        router: this.$router
+      })
     }
   }
 }
@@ -33,21 +143,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
 </style>

@@ -1,8 +1,15 @@
 <template>
-  <div id="app">
+  <v-app toolbar>
     <Navbar></Navbar>  
-    <router-view></router-view>
-  </div>
+    <v-toolbar class="teal" dark fixed>
+      <v-toolbar-title>Chat Room</v-toolbar-title>
+    </v-toolbar>
+    <main>
+      <v-container fluid>
+        <router-view></router-view>
+      </v-container>
+    </main>
+  </v-app>
 </template>
 
 <script>
@@ -17,11 +24,4 @@ export default {
 </script>
 
 <style lang="scss">
-$border-width: 2px;
-$card-border-width: 2px;
-@import "~bootstrap/scss/bootstrap";
-
-.router-link-active {
-  color: $brand-primary !important;
-}
 </style>

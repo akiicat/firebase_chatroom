@@ -1,83 +1,113 @@
 <template>
-  <div class="chatroom mt-3">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-9">
-          <div class="card card-outline-primary">
-            <div class="card-block">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="輸入對話內容" @keyup.enter="submitMessage" v-model="tempMessage" :disabled="!username.length">
-                <span class="input-group-btn">
-                  <button class="btn btn-primary" type="button" :disabled="!username.length" @click="submitMessage()">送出</button>
-                </span>
-              </div>
-              <ul class="list-unstyled row">
-                <li class="media mt-3 col-9" v-for="(item, key) in messages" :class="{ 'text-success offset-3': item.username == username }">
-                  <img class="d-flex mr-3" width="50" height="50" src="http://lorempixel.com/50/50/sports" alt="" v-if="item.username != username">
-                  <div class="media-body">
-                    <h5 class="mt-0 mb-1">{{ item.username }}</h5>
-                    <p>{{ item.message }}</p>
-                  </div>
-                  <img class="d-flex ml-3" width="50" height="50" src="http://lorempixel.com/50/50/sports" alt="" v-if="item.username == username">
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="card">
-            <div class="card-header">
-              你的資料
-            </div>
-            <div class="card-block">
-              <div class="form-group">
-                <label for="username">姓名</label>
-                <input type="text" class="form-control" v-model="tempUsername" id="username" placeholder="輸入姓名">
-                <small class="form-text text-muted">請輸入個人姓名開始使用聊天室</small>
-              </div>
-              <button type="button" class="btn btn-primary" @click="updateUsername()">送出</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  
-  </div>
+  <v-container>
+    <v-layout row>
+      <v-flex xs12 v-if="!username">
+        <form @submit.prevent="updateUsername">
+          <v-layout row>
+            <v-flex xs8>
+              <v-text-field
+                label="請輸入個人姓名開始使用聊天室"
+                single-line
+                v-model="tempUsername" 
+                @keyup.enter="updateUsername"
+                ></v-text-field>
+            </v-flex>
+
+            <v-flex xs4>
+              <v-btn type="submit" primary>送出</v-btn>
+            </v-flex>
+          </v-layout>
+        </form>
+      </v-flex>
+      <v-flex xs12 v-else>
+        {{ username }}
+      </v-flex>
+    </v-layout>
+
+    <v-layout row>
+      <v-flex xs12>
+        <form @submit.prevent="submitMessage">
+          <v-layout row>
+            <v-flex xs8>
+              <v-text-field
+                label="輸入對話"
+                single-line
+                v-model="tempMessage"
+                @keyup.enter="submitMessage"
+                :disabled="!username"
+                ></v-text-field>
+            </v-flex>
+
+            <v-flex xs4>
+              <v-btn type="submit" primary :disabled="!username">送出</v-btn>
+            </v-flex>
+          </v-layout>
+        </form>
+      </v-flex>
+    </v-layout>
+
+    <v-layout>
+      <v-flex>
+        <template v-for="item in messages">
+          <v-card flat>
+            <v-layout>
+              <v-flex xs2>
+                <v-card-media
+                  :src="item.photoURL"
+                  height="40px"
+                  contain></v-card-media>
+              </v-flex>
+              <v-flex xs10>
+                <strong>{{ item.username }}</strong>
+                <p>{{ item.message }}</p>
+              </v-flex>
+            </v-layout>
+          </v-card>
+        </template>
+      </v-flex>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
 export default {
-  name: 'hello',
   data() {
     return {
-      tempUsername: '',
-      tempMessage: '',
-      username: '',
+      tempUsername: null,
+      tempMessage: null,
+      username: null,
       messages: [
         {
-          username: 'Casper',
-          message: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.'
+          photoURL: "http://lorempixel.com/50/50/sports",
+          username: "List-based media object",
+          message: "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus."
         },
         {
-          username: 'Pon Pon',
-          message: 'Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.'
+          photoURL: "http://lorempixel.com/50/50/sports",
+          username: "List-based media object",
+          message: "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus."
+        },
+        {
+          photoURL: "http://lorempixel.com/50/50/sports",
+          username: "List-based media object",
+          message: "Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus."
         }
       ]
     }
   },
   methods: {
     updateUsername () {
-      let vm = this;
-      vm.username = vm.tempUsername;
-      console.log(vm.username, vm.tempUsername)
+      this.username = this.tempUsername;
+      console.log(this.username, this.tempUsername)
     },
     submitMessage () {
-      let vm = this;
-      vm.messages.push({
-        username: vm.username,
-        message: vm.tempMessage
+      if (!this.tempMessage) return null
+
+      this.messages.push({
+        username: this.username,
+        message: this.tempMessage
       });
-      vm.tempMessage = ''
+      this.tempMessage = null
     }
   }
 }
