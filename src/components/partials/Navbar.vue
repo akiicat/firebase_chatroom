@@ -25,8 +25,8 @@ export default {
       navItems: [
         { beforeLogin: true,  afterLogin: false, icon: 'perm_identity', path: '/hello', title: '入口頁面' },
         { beforeLogin: false, afterLogin: true, icon: 'perm_identity', path: '/profile', title: '使用者設定' },
-        { beforeLogin: true,  afterLogin: true, icon: 'web', path: '/static', title: '樣板頁面' },
-        { beforeLogin: true,  afterLogin: true, icon: 'mode_comment', path: '/chatroom', title: '聊天室' },
+        { beforeLogin: false, afterLogin: false, icon: 'web', path: '/static', title: '樣板頁面' },
+        { beforeLogin: false, afterLogin: false, icon: 'mode_comment', path: '/chatroom', title: '聊天室' },
         { beforeLogin: false, afterLogin: true, icon: 'whatshot', path: '/firebase-chatroom', title: 'Firebase 聊天室' }
       ]
     }
