@@ -17,27 +17,39 @@ export default new Router({
     {
       path: '/hello',
       name: 'Hello',
-      component: Hello
+      component: Hello,
+      meta: { requiresAuth: true}
     },
     {
       path: '/static',
       name: 'Static',
-      component: Static
+      component: Static,
+      meta: { requiresAuth: true}
     },
     {
       path: '/chatroom',
       name: 'Chatroom',
-      component: Chatroom
+      component: Chatroom,
+      meta: { requiresAuth: true}
     },
     {
       path: '/firebase-chatroom',
       name: 'FirebaseChatroom',
-      component: FirebaseChatroom
+      component: FirebaseChatroom,
+      meta: { requiresAuth: true}
     },
     {
       path: '/profile',
       name: 'Profile',
-      component: Profile
+      component: Profile,
+      meta: { requiresAuth: true}
+    },
+    {
+      path: '/',
+      redirect: { name: 'Hello' },
+      meta: { requiresAuth: true}
     }
   ]
 })
+
+

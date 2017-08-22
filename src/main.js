@@ -16,6 +16,17 @@ Vue.use(Vuetify)
 Vue.filter('identicon', Identicon)
 Vue.filter('username', Username)
 
+router.beforeEach((to, from, next) => {
+  let user = store.getters.user
+  if ( user && to.path === '/hello' ||
+      !user && to.path === '/firebase-chatroom' ||
+      !user && to.path === '/profile') {
+    next({ path: from.path })
+  } else {
+    next()
+  }
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
