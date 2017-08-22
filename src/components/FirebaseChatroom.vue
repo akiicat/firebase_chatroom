@@ -60,17 +60,9 @@ export default {
       return this.$store.getters.user
     },
     messages () {
-      let users = this.$store.getters.users
-      let messages = this.$store.getters.users
-      console.log(users, messages)
-      if (users) {
-        debugger
-      }
-      else {
-        return Object.keys(this.$store.getters.messages).reverse().map((key) => {
-          return this.$store.getters.messages[key]
-        })
-      }
+      return Object.keys(this.$store.getters.messages).reverse().map((key) => {
+        return this.$store.getters.messages[key]
+      })
     }
   },
   methods: {
